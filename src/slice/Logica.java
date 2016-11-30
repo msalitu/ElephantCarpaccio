@@ -50,7 +50,7 @@ public class Logica {
 				    getConnection("jdbc:h2:~/test", "sa", "");
 				
 				Statement statement = conn.createStatement();
-				ResultSet rs = statement.executeQuery("SELECT PRECIO FROM PRODUCTOS WHERE NAME= '"+ p.getNombre() +"'");
+				ResultSet rs = statement.executeQuery("SELECT PRECIO FROM PRODUCTOS WHERE NOMBRE= '"+ p.getNombre() +"'");
 			
 				while (rs.next()) {
 				    Integer precio = rs.getInt("PRECIO"); // Assuming there is a column called name.

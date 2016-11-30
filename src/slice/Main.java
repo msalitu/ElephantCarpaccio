@@ -10,20 +10,7 @@ import javax.swing.JOptionPane;
 public class Main {
 
 	public static void main(String[] args) {
-        Connection conn;
-
-		try {
-			Class.forName("org.h2.Driver");
-			conn = DriverManager.
-				    getConnection("jdbc:h2:~/test","sa","");
-			} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		
+      		
 		String estado = JOptionPane.showInputDialog("Ingrese un codigo de estado");
 		Logica l = new Logica(estado);
 
