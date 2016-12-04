@@ -1,18 +1,13 @@
 package slice;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 public class Main {
 
 	public static void main(String[] args) {
-      		
-		String estado = JOptionPane.showInputDialog("Ingrese un codigo de estado");
-		Logica l = new Logica(estado);
+
+		Logica l = añadirEstado();
 
 		while (true) {
 			Boolean breakWhile = añadirProd(l);
@@ -21,28 +16,44 @@ public class Main {
 			}
 		}
 
+		Double precio = l.getTotalPrice();
+		JOptionPane.showMessageDialog(null, "Precio total: " + precio.toString(), "Error",
+				JOptionPane.INFORMATION_MESSAGE);
+		System.exit(0);
+
+	}
+
+	public static Logica añadirEstado() {
+		Boolean invalidCountry = true;
+		while (invalidCountry) {
+			try {
+				String estado = JOptionPane.showInputDialog("Ingrese un codigo de estado");
+				return new Logica(estado);
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(null, "País inválido", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+		}
+		return null;
 	}
 
 	public static Boolean añadirProd(Logica l) {
-		JFrame frame = new JFrame();
-		int n = JOptionPane.showConfirmDialog(frame, "Desea añadir otro producto?", "msg", JOptionPane.YES_NO_OPTION);
+		try {
+			JFrame frame = new JFrame();
+			int n = JOptionPane.showConfirmDialog(frame, "¿Desea añadir un producto?", "msg",
+					JOptionPane.YES_NO_OPTION);
 
-		if (n == JOptionPane.YES_OPTION) {
-			String producto = JOptionPane.showInputDialog("Ingrese un producto");
-			//Integer precio = Integer.parseInt(JOptionPane.showInputDialog("Ingrese el precio"));
-			Integer cantidad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese cantidad"));
-			Producto p = new Producto(producto, cantidad);
-			frame = new JFrame();
-			String[] options = new String[2];
-			options[0] = new String("Agree");
-			options[1] = new String("Disagree");
-			JOptionPane.showOptionDialog(frame.getContentPane(), "Has comprado el producto " + producto, "Confirmacion",
-					0, JOptionPane.INFORMATION_MESSAGE, null, options, null);
-			l.addProd(p);
+			if (n == JOptionPane.YES_OPTION) {
+				String producto = JOptionPane.showInputDialog("Ingrese un producto");
+				Integer cantidad = Integer.parseInt(JOptionPane.showInputDialog("Ingrese cantidad"));
+				Producto p = new Producto(producto, cantidad);
+				l.addProd(p);
+				return false;
+			} else {
+				return true;
+			}
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(null, "Error al añadir producto", "Error", JOptionPane.ERROR_MESSAGE);
 			return false;
-		} else {
-			System.out.println("out");
-			return true;
 		}
 	}
 }
